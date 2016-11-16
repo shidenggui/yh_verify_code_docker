@@ -3,6 +3,7 @@ from flask import Flask, request
 import re
 from PIL import Image
 import pytesseract
+from argparse import ArgumentParser
 
 app = Flask(__name__)
 
@@ -38,4 +39,14 @@ def map_numbers(code):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    opt = ArgumentParser()
+    opt.add_argument('--model', default='gevent')
+    args = opt.parse_args()
+    if args.model == 'gevent':
+        from gevent.wsgi import WSGIServer
+
+        http_server = WSGIServer(('0.0.0.0', 5000), app)
+        print('listen on 0.0.0.0:5000')
+        http_server.serve_forever()
+    elif args.model == 'raw':
+        app.run(host='0.0.0.0')
