@@ -10,4 +10,4 @@ COPY digits /usr/share/tesseract-ocr/tessdata/configs/digits
 COPY requirements.txt /requirements.txt
 RUN pip install -r requirements.txt 
 COPY app.py /app.py
-CMD python app.py
+CMD gunicorn -w 4 -k gevent app:app -b 0.0.0.0:5000
