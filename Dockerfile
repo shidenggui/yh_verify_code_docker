@@ -8,6 +8,6 @@ RUN apt-get update && apt-get install -y \
 COPY digits /usr/share/tesseract-ocr/tessdata/configs/digits
 
 COPY requirements.txt /requirements.txt
-RUN pip install -r requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+RUN pip install -r requirements.txt 
 COPY app.py /app.py
 CMD python app.py
