@@ -1,9 +1,10 @@
 # coding:utf8
-from flask import Flask, request
 import re
-from PIL import Image
-import pytesseract
 from argparse import ArgumentParser
+
+import pytesseract
+from PIL import Image
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -15,6 +16,14 @@ def yh():
     image = remove_noise(image)
     code = pytesseract.image_to_string(image, lang='chi_sim', config='-psm 7 digits')
     return map_numbers(code)
+
+
+@app.route('/yh_client', methods=['POST'])
+def yh_client():
+    image = request.files['image']
+    image = Image.open(image)
+    code = pytesseract.image_to_string(image, config='-psm 7')
+    return jsonify({'result': code})
 
 
 def remove_noise(image):
