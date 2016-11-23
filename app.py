@@ -23,7 +23,7 @@ def yh_client():
     image = request.files['image']
     image = Image.open(image)
     code = pytesseract.image_to_string(image, config='-psm 7')
-    return jsonify({'result': code})
+    return jsonify({'result': code}), 201
 
 
 def remove_noise(image):
