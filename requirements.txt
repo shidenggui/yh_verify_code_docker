@@ -4,3 +4,4 @@ pillow
 gunicorn
 pytesseract
 gevent
+influxdb
