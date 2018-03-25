@@ -28,7 +28,7 @@ def yh_client():
     image = request.files['image']
     image = Image.open(image)
     code = pytesseract.image_to_string(image, config='-psm 7')
-    use_time = time.time() - start()
+    use_time = time.time() - start
     try:
         write_to_influxdb(use_time)
     except:
